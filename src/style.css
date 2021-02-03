@@ -1,0 +1,90 @@
+.container {
+  height: 100%;
+}
+
+.card-container {
+  display: flex;
+}
+
+.flex-container {
+  display: flex;
+}
+.flex-container > * {
+  flex: 0 0 auto;
+}
+.stretchy {
+  flex: 1 1 auto;
+}
+.column {
+  flex-direction: column;
+}
+html,
+body,
+.full-screen {
+  height: 100vh;
+}
+body {
+  margin: 0;
+}
+.full-screen {
+  display: flex;
+  flex-direction: column;
+}
+.full-screen > * {
+  flex: 0 0 auto;
+}
+.full-screen > .header,
+.full-screen > .footer {
+  height: 50px;
+  background: #555;
+  color: white;
+}
+.full-screen > .main {
+  flex: 1 1 auto;
+  display: flex;
+}
+.full-screen > .main > * {
+  flex: 0 0 auto;
+}
+.full-screen > .main > .left,
+.full-screen > .main > .right {
+  width: 420px;
+  background: #eee;
+}
+.full-screen > .main > .middle {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.symbol-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+.symbol-button-container {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.symbol {
+  width: 300px;
+  height: 300px;
+}
+
+.unit-list {
+  display: flex;
+}
+
+.unit-list-item {
+  padding: 1rem;
+  font-size: 32px;
+  text-transform: capitalize;
+}
