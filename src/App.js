@@ -105,7 +105,7 @@ class App extends React.Component {
   render() {
     const { selectedRace, selectedUnits, games, newGame } = this.state;
     const raceSymbolImage = this.getRaceSymbolImage(selectedRace);
-
+    
     return (
       <div className="container">
         <div className="full-screen">
