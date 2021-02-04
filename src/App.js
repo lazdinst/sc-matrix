@@ -1,5 +1,6 @@
 import React from "react";
 // import "./styles.css";
+import axios from 'axios';
 
 import protoss from "./images/protoss.png";
 import terran from "./images/terran.png";
@@ -22,6 +23,20 @@ class App extends React.Component {
       games: [],
       newGame: false
     };
+  }
+
+  componentDidMount() {
+    axios
+    .get("/api/users")
+    .then((response) => {
+      const users = response.data;
+      return this.setUsers(users)
+    })
+    .catch((err) => console.log(err));
+  }
+
+  setUsers = (users) => {
+    this.setState({users: users})
   }
 
   handleRoll = () => {
@@ -66,6 +81,8 @@ class App extends React.Component {
     });
   };
 
+  
+
   handleGameUpdate = (result) => {
     const game = {
       result: result,
@@ -105,12 +122,12 @@ class App extends React.Component {
   render() {
     const { selectedRace, selectedUnits, games, newGame } = this.state;
     const raceSymbolImage = this.getRaceSymbolImage(selectedRace);
-    
+
     return (
       <div className="container">
         <div className="full-screen">
           <div className="header">
-            <div>StarCraft Unit Roller</div>
+            <div>StarCraft Unit Roller - test</div>
           </div>
           <div className="main">
             <div className="left">

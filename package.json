@@ -16,11 +16,13 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.2",
+    "socket.io": "^3.1.1",
     "web-vitals": "^1.1.0"
   },
   "proxy": "http://localhost:5000",
   "scripts": {
-    "start": "node backend/server.js",
+    "start": "react-scripts start",
+    "serve": "react-scripts build && nodemon backend/server.js",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && run build",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -43,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
