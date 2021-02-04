@@ -1,6 +1,7 @@
 import React from "react";
 // import "./styles.css";
 import axios from 'axios';
+import socketIOClient from "socket.io-client";
 
 import protoss from "./images/protoss.png";
 import terran from "./images/terran.png";
@@ -12,6 +13,8 @@ import data from "./data";
 import Race from "./Race";
 import Units from "./Units";
 import GameHistory from "./GameHistory";
+
+const ENDPOINT = "http://localhost:5000";
 
 class App extends React.Component {
   constructor(props) {
@@ -27,16 +30,29 @@ class App extends React.Component {
 
   componentDidMount() {
     axios
-    .get("/api/users")
-    .then((response) => {
-      const users = response.data;
-      return this.setUsers(users)
-    })
-    .catch((err) => console.log(err));
+      .get("/api/games")
+      .then((response) => {
+        const games = response.data;
+        console.log(games)
+        return this.setGameHistory(games)
+      })
+      .catch((err) => console.log(err));
+
+    console.log('trying to open socket')
+    const socket = socketIOClient(ENDPOINT);
+    socket.on("FromAPI", data => {
+      console.log(data);
+    });
+
   }
 
-  setUsers = (users) => {
-    this.setState({users: users})
+  setGameHistory = (games) => {
+    // const filteredGamesData = games.map(game => {
+
+    //   return {result: game.result, units }
+    // })
+    console.log(games)
+    this.setState({games: games})
   }
 
   handleRoll = () => {
@@ -84,13 +100,20 @@ class App extends React.Component {
   
 
   handleGameUpdate = (result) => {
-    const game = {
-      result: result,
-      race: this.state.selectedRace,
-      units: this.state.selectedUnits
-    };
+    const { selectedUnits } = this.state;
+    const units = selectedUnits.map(unit => unit.name);
 
-    console.log([...this.state.games, game]);
+    const game = { result: result, units: units};
+
+    axios
+      .post("/api/games", game)
+      .then((response) => {
+        console.log("Games Updated");
+        return response;
+      })
+      .catch((err) => {
+        console.log("Failed to update Games. Please try again");
+      });
 
     this.setState({
       games: [...this.state.games, game],

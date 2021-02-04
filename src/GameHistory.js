@@ -8,7 +8,7 @@ const GameHistory = ({ games }) => {
           <div>
             {idx}: <span>{game.result ? "W" : "L"}</span>
             {game.units.map((unit) => (
-              <span> {unit.name} |</span>
+              <span> {unit} |</span>
             ))}
           </div>
         </div>
