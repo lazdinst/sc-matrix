@@ -30,7 +30,7 @@ class App extends React.Component {
 
   componentDidMount() {
     axios
-      .get("/api/games")
+      .get("/api/game_history")
       .then((response) => {
         const games = response.data;
         console.log(games)

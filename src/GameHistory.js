@@ -6,9 +6,9 @@ const GameHistory = ({ games }) => {
       {games.map((game, idx) => (
         <div key={`${JSON.stringify(game)}${idx}`}>
           <div>
-            {idx}: <span>{game.result ? "W" : "L"}</span>
-            {game.units.map((unit) => (
-              <span> {unit} |</span>
+            {idx}: <span>{game.victory ? "W" : "L"}</span>
+            {game.races.map((races) => (
+              <span> {races} |</span>
             ))}
           </div>
         </div>

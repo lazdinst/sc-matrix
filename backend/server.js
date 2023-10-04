@@ -7,39 +7,66 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-require('dotenv').config();
-require('./database');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
-let interval;
+const { connectDB } = require('./database');
+connectDB();
 
-io.on("connection", (socket) => {
-  console.log("New client connected");
-  if (interval) {
-    clearInterval(interval);
-  }
-//   interval = setInterval(() => getApiAndEmit(socket), 1000);
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
 
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-    clearInterval(interval);
-  });
-});
-
-const getApiAndEmit = socket => {
-  const response = new Date();
-  // Emitting a new message. Will be consumed by the client
-  socket.emit("FromAPI", response);
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204
 };
 
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
-app.use(cors());
+
+
+// let interval;
+
+// io.on("connection", (socket) => {
+//   console.log("New client connected");
+//   if (interval) {
+//     clearInterval(interval);
+//   }
+// //   interval = setInterval(() => getApiAndEmit(socket), 1000);
+
+//   socket.on("disconnect", () => {
+//     console.log("Client disconnected");
+//     clearInterval(interval);
+//   });
+// });
+
+// const getApiAndEmit = socket => {
+//   const response = new Date();
+//   // Emitting a new message. Will be consumed by the client
+//   socket.emit("FromAPI", response);
+// };
 
 // API
-const users = require('./api/users');
-app.use('/api/users', users);
+// const users = require('./api/users');
+// app.use('/api/users', users);
 
-const games = require('./api/games')(io);
-app.use('/api/games', games);
+// const games = require('./api/games')(io);
+// app.use('/api/games', games);
+
+const gameHistory = require('./api/game_history');
+app.use('/api/game_history', gameHistory);
+
+const unitsRoutes = require('./api/units');
+app.use('/api/units', unitsRoutes);
+
+const rollRoutes = require('./api/roll');
+app.use('/api/roll', rollRoutes);
 
 app.use(express.static(path.join(__dirname, '../build')))
 app.get('*', (req, res) => {
