@@ -8,6 +8,10 @@ const RollResultSchema = new Schema({
         required: true,
         enum: ['terran', 'zerg', 'protoss']
     },
+    name: {
+        type: String,
+        required: true
+    },
     units: [{
         type: String,
         required: true
@@ -15,9 +19,9 @@ const RollResultSchema = new Schema({
 });
 
 // Define the GameRoll schema
+
 const GameRollSchema = new Schema({
-    playerOne: RollResultSchema,
-    playerTwo: RollResultSchema,
+    players: [RollResultSchema],
     timestamp: {
         type: Date,
         default: Date.now

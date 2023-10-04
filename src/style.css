@@ -1,3 +1,26 @@
+@font-face {
+  font-family: 'eurostile';
+  font-weight: 900;
+  src: local('eurostile'), url(./fonts/Eurostile_Extended_Regular.ttf) format('truetype');
+}
+
+::-webkit-scrollbar {
+  width: 0.75rem;
+}
+
+::-webkit-scrollbar-track {
+  background: #090f21;
+  border: 0.2rem solid #020916; /* This is $black-200, replace if you have the variable in your other stylesheet */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #5ea1e2; /* replace with appropriate variable if needed */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2c5d84; /* This is $blue-100, replace if you have the variable in your other stylesheet */
+}
+
 .container {
   height: 100%;
 }
@@ -33,11 +56,28 @@ body {
 .full-screen > * {
   flex: 0 0 auto;
 }
-.full-screen > .header,
 .full-screen > .footer {
   height: 50px;
   background: #555;
   color: white;
+}
+
+.full-screen > .header {
+  height: 50px;
+  background: #555;
+  color: white;
+  --gradient-opacity: .95;
+  background: linear-gradient(rgba(9,15,22,var(--gradient-opacity)),rgba(18,29,43,var(--gradient-opacity)));
+  border-bottom: 1px solid #1d2b35;
+  border-top: 1px solid #02040f;
+  box-shadow: 0 2px 1px 0 #02040f, inset 0 1px 0 0 #12181f;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  padding-left: 1em;
+  font-family: 'eurostile';
+  text-transform: uppercase;
+  color: #fff;
+  text-transform: uppercase;
 }
 .full-screen > .main {
   flex: 1 1 auto;
@@ -49,13 +89,142 @@ body {
 .full-screen > .main > .left,
 .full-screen > .main > .right {
   width: 420px;
-  background: #eee;
+  background: linear-gradient(135deg, #1f1f1f, #2a2a2a);
 }
+
 .full-screen > .main > .middle {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between; /* This will push the cards container and button container apart */
+  padding: 1rem;
+  background: linear-gradient(135deg, #1f1f1f, #2a2a2a);
+  background-image: url('https://i.makeagif.com/media/4-14-2018/ht_2DW.gif');
+}
+
+/* Card styles */
+.cards-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  align-items: center;
+  flex-grow: 1; /* This allows it to take up the remaining space */
+}
+
+.card {
+  background: #2C2F33; /* Discord dark theme color */
+  border-radius: 2px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(100% - 20px); /* 100% of its container minus some padding */
+  height: auto; /* Let it be dictated by its content, or set a percentage/vw value */
+  padding: 2vw; /* Using vw makes the padding responsive */
+  box-sizing: border-box;
+}
+
+.card img {
+  height: 25%;
+  width: auto;
+}
+
+.card-header {
+  font-weight: bold;
+  text-align: center;
+  font-family: 'eurostile';
+  text-transform: uppercase;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 20px;
+  text-shadow: 0 0 9px #06f, 0 0 2px #fff;
+  margin: 10px 0;
+}
+
+
+.flex-row-column {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.flex-row-column > div {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.icon-with-value {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.button-container {
+  width: 100%; /* Takes the full width of the parent .middle container */
+  height: 25%; /* Sets the height to be 25% of its parent .middle container */
+  display: flex;
+  justify-content: center; /* Horizontally center the buttons */
+  align-items: center; /* Vertically center the buttons */
+  gap: 1rem;
+}
+
+.button {
+  background: #7289DA; /* Discord primary button color */
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.button-sc {
+  align-items: center;
+  justify-content: center; /* Horizontal centering with Flexbox */
+  font-weight: bold;
+  text-align: center;
+  font-family: 'eurostile';
+  text-transform: uppercase;
+  background: #1b1920; /* $black-100 */
+  background: linear-gradient(185deg, #020916 46%, #083865 88%); /* $black-200 and $blue-300 */
+  border: 0.1rem solid #2c5d84; /* $blue-100 */
+  border-radius: 0.25rem;
+  color: #58b7dc; /* $main-font-color */
+  cursor: pointer;
+  display: flex;
+  font-weight: 600;
+  height: 4rem;
+  padding: 0 1rem;
+  transition: all 0.3s;
+  width: 100%;
+  max-width: 250px;
+
+  &:hover {
+      border-color: white;
+      color: white;
+
+      .arrow {
+          border-color: white;
+      }
+  }
+}
+
+
+.button.positive {
+  background: #43B581; /* Green color for positive actions */
+}
+
+.button.warning {
+  background: #FAA61A; /* Orange color for warning */
+}
+
+.button.error {
+  background: #F04747; /* Red color for errors */
 }
 
 .symbol-container {

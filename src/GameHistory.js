@@ -1,14 +1,15 @@
 import React from "react";
+import { v4 as uuidv4 } from 'uuid';
 
-const GameHistory = ({ games }) => {
+const GameHistory = ({ history }) => {
   return (
     <>
-      {games.map((game, idx) => (
-        <div key={`${JSON.stringify(game)}${idx}`}>
+      {history.map((game, idx) => (
+        <div key={uuidv4()}>
           <div>
             {idx}: <span>{game.victory ? "W" : "L"}</span>
             {game.races.map((races) => (
-              <span> {races} |</span>
+              <span key={uuidv4()}> {races} |</span>
             ))}
           </div>
         </div>
