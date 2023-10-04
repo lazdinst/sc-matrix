@@ -1,11 +1,12 @@
 import React from "react";
 import { v4 as uuidv4 } from 'uuid';
-
+import io from 'socket.io-client'; // 1. Import socket.io-client
 import GameHistory from "./GameHistory";
 import { getGameHistory, executeRoll, getUnits } from "./api";
 
 import Button from './components/Button'
 import RollCard from './containers/RollCard';
+const SOCKET_ENDPOINT = "http://localhost:5000"; 
 
 class App extends React.Component {
   constructor(props) {
@@ -29,15 +30,33 @@ class App extends React.Component {
       })
       .catch((err) => console.log(err));
       
-    getUnits()
-      .then((units) => {
-        console.log(units)
-        return this.setUnits({
-          units: units
+      getUnits()
+        .then((units) => {
+          console.log(units)
+          return this.setUnits({
+            units: units
+          })
         })
-      })
-      .catch((err) => console.log(err));
-  }
+        .catch((err) => console.log(err));
+      
+        this.handleSocketCreation()
+    }
+    
+    handleSocketCreation = () => {
+      this.socket = io(SOCKET_ENDPOINT, { withCredentials: true });  // 2. Initialize the connection
+      this.socket.on("roll", data => {  // 3. Listen to any events you want
+        // Handle data received from the server
+        console.log("Roll from server:", data);
+
+        this.setState({
+          roll: data
+        })
+      });
+      this.socket.on("connections", data => {  // 3. Listen to any events you want
+        // Handle data received from the server
+        console.log("New Connection to server:", data);
+      });
+    }
 
   setGameHistory = (gameHistory) => {
     this.setState({gameHistory: gameHistory})

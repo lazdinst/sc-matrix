@@ -5,7 +5,6 @@ const path = require('path')
 const app = express();
 
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
 
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
@@ -30,34 +29,30 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
+let TOTAL_CONNECTIONS = 0;
 
-// let interval;
+const io = require('socket.io')(http, {
+  cors: {
+    origin: allowedOrigins, // Reuse the allowed origins from your Express CORS settings
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
 
-// io.on("connection", (socket) => {
-//   console.log("New client connected");
-//   if (interval) {
-//     clearInterval(interval);
-//   }
-// //   interval = setInterval(() => getApiAndEmit(socket), 1000);
+io.on("connection", (socket) => {
+  TOTAL_CONNECTIONS += 1;
+  io.emit('connections', { count: TOTAL_CONNECTIONS});
+  socket.on("disconnect", () => {
+    TOTAL_CONNECTIONS -= 1;
+    io.emit('connections', { count: TOTAL_CONNECTIONS});
+    console.log("Client disconnected");
+  });
+});
 
-//   socket.on("disconnect", () => {
-//     console.log("Client disconnected");
-//     clearInterval(interval);
-//   });
-// });
-
-// const getApiAndEmit = socket => {
-//   const response = new Date();
-//   // Emitting a new message. Will be consumed by the client
-//   socket.emit("FromAPI", response);
-// };
-
-// API
-// const users = require('./api/users');
-// app.use('/api/users', users);
-
-// const games = require('./api/games')(io);
-// app.use('/api/games', games);
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
 
 const gameHistory = require('./api/game_history');
 app.use('/api/game_history', gameHistory);
@@ -65,7 +60,7 @@ app.use('/api/game_history', gameHistory);
 const unitsRoutes = require('./api/units');
 app.use('/api/units', unitsRoutes);
 
-const rollRoutes = require('./api/roll');
+const rollRoutes = require('./api/roll')
 app.use('/api/roll', rollRoutes);
 
 app.use(express.static(path.join(__dirname, '../build')))

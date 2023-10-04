@@ -23,7 +23,6 @@ router.post('/', async (req, res) => {
     const playerOne = roll('playerOne');
     const playerTwo = roll('playerTwo');
 
-    // Remove all documents from the collection
     GameRoll.deleteMany({})
         .then(() => {
             // Create and save the new game roll to MongoDB
@@ -33,7 +32,7 @@ router.post('/', async (req, res) => {
             return gameRoll.save();
         })
         .then(savedRoll => {
-            console.log('Roll Save Successful!')
+            req.io.emit('roll', [playerOne, playerTwo]);
             res.json([playerOne, playerTwo]);
         })
         .catch(err => {
