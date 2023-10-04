@@ -1,7 +1,19 @@
 const mongoose = require('mongoose');
-const connection = process.env.REACT_APP_DATABASE_CONNECTION;
 
-mongoose.connect(connection,{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
-    .then(() => console.log("Database Connected Successfully"))
-    .catch(err => console.log(err));
+const uri = process.env.MONGODB_URI;
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGODB_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+        console.log("Connected to MongoDB using Mongoose!");
+    } catch (error) {
+        console.error("Failed to connect to the database!", error);
+        process.exit(1);
+    }
+};
 
+module.exports = {
+    connectDB
+};
