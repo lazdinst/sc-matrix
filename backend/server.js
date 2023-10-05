@@ -12,6 +12,7 @@ const { connectDB } = require('./database');
 connectDB();
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
+console.log(allowedOrigins)
 
 const corsOptions = {
   origin: function (origin, callback) {
