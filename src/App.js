@@ -7,7 +7,7 @@ import { getGameHistory, executeRoll, getUnits } from "./api";
 import Button from './components/Button'
 import RollCard from './containers/RollCard';
 const SOCKET_ENDPOINT = process.env.REACT_APP_RENDER_NODE_SOCKET_URI || 'http://localhost:5000';
-
+console.log(process.env)
 class App extends React.Component {
   constructor(props) {
     super(props);
