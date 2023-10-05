@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const RaceList = (props) => {
   const { race, units } = props;
