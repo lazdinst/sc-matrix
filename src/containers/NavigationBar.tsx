@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
-const NavigationBar = () => {
+const NavigationBar: React.FC = (): ReactElement => {
   return (
     <nav className="sc2-navbar">
       <div className="nav-title">

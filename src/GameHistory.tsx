@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-const GameHistory = ({ history }) => {
+interface GameProps {
+  victory: boolean;
+  races: string[];
+}
+
+interface GameHistoryProps {
+  history: GameProps[];
+}
+
+const GameHistory: React.FC<GameHistoryProps> = ({ history }): ReactElement => {
   return (
     <>
       {history.map((game, idx) => (

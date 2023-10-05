@@ -1,16 +1,17 @@
+// Assuming you are using ES Modules and have the respective image files.
 import protoss from './images/protoss.png';
 import terran from './images/terran.png';
 import zerg from './images/zerg.png';
 import sc from './images/sc.png';
 
-const { REACT_APP_API_PROTOCOL, REACT_APP_API_HOST, REACT_APP_API_PORT } =
-  process.env;
+type Race = 'protoss' | 'terran' | 'zerg';
 
-export function uriGenerator() {
-  return `${REACT_APP_API_PROTOCOL}://${REACT_APP_API_HOST}:${REACT_APP_API_PORT}`;
+interface SymbolResult {
+  race: Race | string; // Using Race | string to account for the default case where race might not be one of the three known types.
+  symbol: string;
 }
 
-export function getSymbolImageByRace(race) {
+export function getSymbolImageByRace(race: Race | string): SymbolResult {
   let symbol = sc;
   switch (race) {
     case 'protoss':
