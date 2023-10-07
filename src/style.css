@@ -184,6 +184,7 @@ body {
 }
 
 .button-sc {
+  font-size: 1.5rem;
   align-items: center;
   justify-content: center; /* Horizontal centering with Flexbox */
   font-weight: bold;
