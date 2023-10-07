@@ -92,7 +92,7 @@ class App extends React.Component {
       <div className="container">
         <div className="full-screen">
           <div className="header">
-            <h2>Shiva's Matrix</h2>
+            <h2>Shiva's Matrix!</h2>
           </div>
           <div className="main">
             <div className="left">

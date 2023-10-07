@@ -64,9 +64,9 @@ app.use('/api/units', unitsRoutes);
 const rollRoutes = require('./api/roll');
 app.use('/api/roll', rollRoutes);
 
-app.use(express.static(path.join(__dirname, '../dist')));
+app.use(express.static(path.join(__dirname, '../dist/sc-matrix')));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist'));
+  res.sendFile(path.join(__dirname, '../dist/sc-matrix'));
 });
 
 const port = process.env.PORT || 5000;
