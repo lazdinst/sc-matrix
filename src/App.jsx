@@ -7,7 +7,7 @@ import { getGameHistory, executeRoll, getUnits } from './api';
 import Button from './components/Button';
 import RollCard from './containers/RollCard';
 const SOCKET_ENDPOINT =
-  import.meta.env.VITE_RENDER_NODE_SOCKET_URI || 'http://localhost:5000';
+  import.meta.env.VITE_RENDER_NODE_SOCKET_URI || 'http://0.0.0.0:6969';
 
 class App extends React.Component {
   constructor(props) {
