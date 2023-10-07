@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import minerals from "./images/minerals.gif";
-import vespene from "./images/vespene.gif";
+import minerals from './images/minerals.gif';
+import vespene from './images/vespene.gif';
 
 const Unit = (props) => {
   const { unit } = props;

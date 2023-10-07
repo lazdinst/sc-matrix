@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
+    "@swc/helpers": "~0.5.2",
     "@testing-library/user-event": "^12.6.3",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
@@ -14,29 +13,19 @@
     "mongodb": "^6.1.0",
     "mongoose": "^7.5.3",
     "path": "^0.12.7",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "^5.0.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "socket.io": "^3.1.1",
     "socket.io-client": "^3.1.3",
-    "uuid": "^9.0.1",
-    "web-vitals": "^1.1.0"
+    "uuid": "^9.0.1"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:4200",
   "scripts": {
-    "start": "react-scripts start",
-    "start:server": "nodemon ./backend/server.js",
-    "serve": "react-scripts build && nodemon backend/server.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && run build",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "start": "nx exec -- vite",
+    "start:server": "nodemon ./backend/server",
+    "serve": "nx exec -- vite",
+    "build": "nx exec -- vite build",
+    "test": "nx exec -- vitest"
   },
   "browserslist": {
     "production": [
@@ -52,6 +41,41 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.20",
-    "nodemon": "^2.0.22"
+    "@nx/eslint-plugin": "16.10.0",
+    "@nx/js": "16.10.0",
+    "@nx/linter": "16.10.0",
+    "@nx/react": "16.10.0",
+    "@nx/vite": "16.10.0",
+    "@nx/workspace": "16.10.0",
+    "@swc/cli": "~0.1.62",
+    "@swc/core": "~1.3.85",
+    "@testing-library/jest-dom": "^6.1.3",
+    "@testing-library/react": "14.0.0",
+    "@types/node": "18.14.2",
+    "@types/react": "18.2.24",
+    "@types/react-dom": "18.2.9",
+    "@typescript-eslint/eslint-plugin": "^5.60.1",
+    "@typescript-eslint/parser": "^5.60.1",
+    "@vitejs/plugin-react": "~4.0.0",
+    "@vitest/coverage-c8": "~0.32.0",
+    "@vitest/ui": "~0.32.0",
+    "eslint": "~8.46.0",
+    "eslint-config-prettier": "8.1.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-jsx-a11y": "6.7.1",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "7.32.2",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "jest-watch-typeahead": "^2.2.2",
+    "jsdom": "~22.1.0",
+    "nodemon": "^2.0.22",
+    "nx": "16.10.0",
+    "nx-cloud": "latest",
+    "prettier": "^3.0.3",
+    "typescript": "~5.1.3",
+    "vite": "~4.3.9",
+    "vitest": "^0.32.4",
+    "web-vitals": "^3.5.0"
   }
 }

@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const path = require('path')
+const path = require('path');
 const app = express();
 
 const http = require('http').Server(app);
@@ -12,6 +12,7 @@ const { connectDB } = require('./database');
 connectDB();
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
+console.log(allowedOrigins);
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -23,7 +24,7 @@ const corsOptions = {
   },
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
-  optionsSuccessStatus: 204
+  optionsSuccessStatus: 204,
 };
 
 app.use(cors(corsOptions));
@@ -34,18 +35,18 @@ let TOTAL_CONNECTIONS = 0;
 const io = require('socket.io')(http, {
   cors: {
     origin: allowedOrigins, // Reuse the allowed origins from your Express CORS settings
-    methods: ["GET", "POST"],
-    credentials: true
-  }
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
 });
 
-io.on("connection", (socket) => {
+io.on('connection', (socket) => {
   TOTAL_CONNECTIONS += 1;
-  io.emit('connections', { count: TOTAL_CONNECTIONS});
-  socket.on("disconnect", () => {
+  io.emit('connections', { count: TOTAL_CONNECTIONS });
+  socket.on('disconnect', () => {
     TOTAL_CONNECTIONS -= 1;
-    io.emit('connections', { count: TOTAL_CONNECTIONS});
-    console.log("Client disconnected");
+    io.emit('connections', { count: TOTAL_CONNECTIONS });
+    console.log('Client disconnected');
   });
 });
 
@@ -60,16 +61,16 @@ app.use('/api/game_history', gameHistory);
 const unitsRoutes = require('./api/units');
 app.use('/api/units', unitsRoutes);
 
-const rollRoutes = require('./api/roll')
+const rollRoutes = require('./api/roll');
 app.use('/api/roll', rollRoutes);
 
-app.use(express.static(path.join(__dirname, '../build')))
+app.use(express.static(path.join(__dirname, '../dist/sc-matrix')));
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../build'))
-})
+  res.sendFile(path.join(__dirname, '../dist/sc-matrix'));
+});
 
 const port = process.env.PORT || 5000;
 
 http.listen(port, () => {
-    console.log(`Listening on: ${port}`);
-  });
+  console.log(`Listening on: ${port}`);
+});
